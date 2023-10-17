@@ -4,23 +4,26 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 public class Main {
-    //Intanciamos el Scanner
+
     static Scanner sc = new Scanner(System.in);
-    //Declaramos variables
-    static int canNumeros,op2,op3;
-    //declaramos el vector
+    static int canNumeros,op2,op3,op;
     static double numeros[];
     public static void main(String[] args) {
         do {      
             comproba();
             System.out.println("-------------------------------------");
             meterNumeros();
-            int op;
+            String opCo;
             do {        
                 menu();
                 System.out.println("Digite una opcion: ");
-                op = sc.nextInt();
-                switch (op) {
+                opCo = sc.next();
+                if (tieneLetras(opCo)) {
+                    System.out.println("Solo numeros");
+                    pausa(); 
+                } else {
+                    op = Integer.parseInt(opCo);
+                 switch (op) {
                     case 1 -> {
                         System.out.println("El promedio es "+promedio(numeros));
                         pausa();
@@ -84,8 +87,10 @@ public class Main {
                     }
                     
                 }
-            
-           } while (op<10);          
+                               
+                }
+
+           } while (op<10 || tieneLetras(opCo));          
             System.out.println("Quiere hacerlo otravez 1.si o 2.no");
                    op3 = sc.nextByte();
         } while (op3<2);
@@ -103,11 +108,15 @@ public class Main {
                  System.out.println("Solo numeros");
                  pausa();
             } else {
-            canNumeros = Integer.parseInt(ca);
-            numeros = new double[canNumeros];                 
-            }
+                 canNumeros = Integer.parseInt(ca);
+                 if (canNumeros<0) {
+                     System.out.println("DEBE DE SER UN NUMERO POSITIVO");
+                 } else {
+                    numeros = new double[canNumeros];                         
+                 }         
+             }
 
-        } while (tieneLetras(ca));
+        } while (tieneLetras(ca)||canNumeros<0);
     }
     
     static boolean tieneLetras(String str){
@@ -115,7 +124,7 @@ public class Main {
         int a =0;
         for (int i = 0; i < caracter.length; i++) {
             char c = caracter[i];
-            if (!Character.isDigit(c)) {
+            if (!Character.isDigit(c) && c!='-') {
                 a++;
             }           
         }
@@ -229,7 +238,7 @@ public class Main {
         return cuartil3;
     }
     
-    static double rango(double array[]){
+    static double rango(double array[]){  
         Arrays.sort(array);
         double rang = array[array.length-1] - array[0];
         return rang;
@@ -255,7 +264,7 @@ public class Main {
         for (int i = 0; i < array2.length; i++) {
             su += array2[i]; 
         }
-         double resu = su / array2.length - 1 ;
+         double resu = su / (array2.length - 1) ;
          return resu;
     }
     
