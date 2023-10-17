@@ -245,8 +245,10 @@ public class Main {
     }
     
     static double rangoCuartil(double array[]){
-        double cua1 = cuartile1(array);
-        double cua3 = cuartil3(array);
+        int posi1 = (int) cuartile1(array);
+        int posi3 = (int) cuartil3(array);
+        double cua1 = array[posi1];
+        double cua3 = array[posi3];
         double res = cua3 - cua1;
         return res;
     }
